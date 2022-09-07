@@ -2,28 +2,37 @@
 
 .sort {
   position: relative;
+  z-index: 100;
+
+  @media screen and (max-width: 1340px) {
+    align-self: baseline;
+  }
+
   &__label {
     display: flex;
-    align-items: center;
 
-    svg {
-      margin-right: 8px;
+    gap: 8px;
+
+    @media screen and (max-width: 830px) {
+      padding-top: 25px;
     }
 
     b {
-      margin-right: 8px;
+      color: #2c2c2c;
     }
 
     span {
       color: $orange;
       border-bottom: 1px dashed $orange;
+      font-weight: 400;
       cursor: pointer;
+      margin-right: 8px;
     }
   }
 
   &__popup {
     position: absolute;
-    right: 0;
+    left: 110px;
     margin-top: 15px;
     background: #ffffff;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.09);

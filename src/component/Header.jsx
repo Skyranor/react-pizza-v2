@@ -16,10 +16,10 @@ function Header() {
             </div>
           </div>
         </Link>
-        <div className="header__cart">
-          <Link to="/cart" className="button button--cart">
-            <span>520 ₽</span>
-            <div className="button__delimiter"></div>
+        <Link to="/cart" className="button button--cart">
+          <span>520 ₽</span>
+          <div className="button__delimiter"></div>
+          <div className="button__inner">
             <svg
               width="18"
               height="18"
@@ -53,8 +53,9 @@ function Header() {
               />
             </svg>
             <span>3</span>
-          </Link>
-        </div>
+          </div>
+        </Link>
+        {/* </div> */}
       </div>
     </div>
   );

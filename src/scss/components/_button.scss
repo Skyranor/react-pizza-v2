@@ -94,6 +94,11 @@
     margin-right: 14px;
   }
 
+  &__inner {
+    display: flex;
+    align-items: center;
+  }
+
   &--add {
     svg {
       margin-right: 2px;
@@ -131,6 +136,8 @@
   &--cart {
     display: flex;
     align-items: center;
+    // display: grid;
+    // grid-template-columns: repeat(2, 1fr);
     line-height: 23px;
     padding: 12px 25px;
 
