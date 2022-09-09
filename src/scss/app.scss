@@ -42,7 +42,7 @@ body {
 
   &__items {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     justify-items: center;
     justify-content: center;
     gap: 65px 40px;
@@ -50,20 +50,20 @@ body {
 
   &__top {
     display: grid;
-    grid-template-columns: 828px 265px;
+    grid-template-columns: 828px 296px;
     justify-content: space-between;
     align-items: center;
     grid-auto-flow: dense;
 
     @media screen and (max-width: 1340px) {
-      grid-template-columns: 628px 265px;
+      grid-template-columns: 628px 296px;
     }
 
     @media screen and (max-width: 1024px) {
-      grid-template-columns: 428px 265px;
+      grid-template-columns: 428px 296px;
     }
 
-    @media screen and (max-width: 830px) {
+    @media screen and (max-width: 860px) {
       grid-template-columns: 1fr;
     }
 

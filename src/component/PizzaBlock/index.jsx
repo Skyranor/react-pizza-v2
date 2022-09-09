@@ -11,8 +11,6 @@ function PizzaBlock({ title, imageUrl, price, sizes, types }) {
       <h4 className="pizza-block__title">{title}</h4>
       <div className="pizza-block__selector">
         <ul>
-          {/* <li className="active">тонкое</li>
-          <li>традиционное</li> */}
           {types.map(typeId => (
             <li
               key={typeId}
@@ -23,7 +21,6 @@ function PizzaBlock({ title, imageUrl, price, sizes, types }) {
           ))}
         </ul>
         <ul>
-          {/* <li className="active">26 см.</li> */}
           {sizes.map((size, index) => (
             <li
               key={size}
