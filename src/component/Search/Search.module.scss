@@ -1,0 +1,43 @@
+.root {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  @media screen and (max-width: 979px) {
+    order: 2;
+    // width: 100%;
+
+    // padding-top: 25px;
+  }
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  opacity: 0.5;
+
+  &Search {
+    left: 12px;
+  }
+
+  &Clear {
+    right: 14px;
+    cursor: pointer;
+    width: 12px;
+    height: 12px;
+    opacity: 0.3;
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+}
+
+input {
+  padding: 12px 20px 12px 42px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  width: 300px;
+  border-radius: 10px;
+  font-size: 16px;
+}
