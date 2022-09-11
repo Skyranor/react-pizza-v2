@@ -1,13 +1,15 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 
 import Sort from '../component/Sort';
 import Categories from '../component/Categories';
 import PizzaBlock from '../component/PizzaBlock';
 import Skeleton from '../component/PizzaBlock/Skeleton';
 import Pagination from '../component/Pagination';
+import { SearchContext } from '../App';
 
-function Home({ searchValue }) {
+function Home() {
+  const { searchValue } = useContext(SearchContext);
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [categoryId, setCategoryId] = useState(0);
@@ -26,9 +28,6 @@ function Home({ searchValue }) {
       const response = await fetch(
         // ${order}
         `https://6315a6a55b85ba9b11e3fc35.mockapi.io/items?${search}&page=${currentPage}&limit=4${category}&sortBy=${sortBy}&order=${order}`
-      );
-      fetch('https://6315a6a55b85ba9b11e3fc35.mockapi.io/items').then(response =>
-        response.json().then(response => console.log(response))
       );
       const json = await response.json();
       setCountOfItems(json.count);
