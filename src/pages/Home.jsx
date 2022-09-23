@@ -1,7 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import { useEffect, useState, useContext } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import qs from 'qs';
+import { useNavigate } from 'react-router-dom';
 
 import Sort from '../component/Sort';
 import Categories from '../component/Categories';
@@ -9,8 +11,15 @@ import PizzaBlock from '../component/PizzaBlock';
 import Skeleton from '../component/PizzaBlock/Skeleton';
 import Pagination from '../component/Pagination';
 import { SearchContext } from '../App';
+import { setFilters } from '../redux/slices/filterSlice';
+import { useRef } from 'react';
 
 function Home() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isSearch = useRef(false);
+  const isMounted = useRef(false);
+
   const { categoryId, sort } = useSelector(state => state.filter);
 
   const { searchValue } = useContext(SearchContext);
@@ -25,7 +34,7 @@ function Home() {
   const order = sort.property.includes('-') ? 'desc' : 'ask';
   const search = searchValue ? `&search=${searchValue}` : '';
 
-  useEffect(() => {
+  const fetchPizzas = () => {
     setIsLoading(true);
     (async () => {
       const { data } = await axios(
@@ -35,6 +44,42 @@ function Home() {
       setItems(data.items);
       setIsLoading(false);
     })();
+  };
+
+  // Если изменили параметры и был первый рендер
+  useEffect(() => {
+    if (isMounted.current) {
+      const queryString = qs.stringify({
+        sort,
+        categoryId
+      });
+      navigate(`?${queryString}`);
+    }
+    isMounted.current = true;
+  }, [categoryId, sort, currentPage]);
+
+  // Если был первый рендер, то провепяем URL-параметры и сохраняем в Redux
+  useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.slice(1));
+      console.log(params);
+
+      dispatch(
+        setFilters({
+          ...params
+        })
+      );
+      isSearch.current = true;
+    }
+  }, []);
+
+  // Если был первый рендер, то запрашиваем пиццы
+  useEffect(() => {
+    if (!isSearch.current) {
+      fetchPizzas();
+    }
+    console.log(sort);
+    isSearch.current = false;
   }, [categoryId, sort, searchValue, currentPage]);
 
   const skeletons = new Array(10).fill('').map((item, index) => <Skeleton key={index} />);
