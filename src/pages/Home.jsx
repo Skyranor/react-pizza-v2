@@ -29,20 +29,27 @@ function Home() {
   const [countOfItems, setCountOfItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const category = categoryId ? `&category=${categoryId}` : '';
-  const sortBy = sort.property.replace('-', '');
-  const order = sort.property.includes('-') ? 'desc' : 'ask';
-  const search = searchValue ? `&search=${searchValue}` : '';
-
   const fetchPizzas = () => {
     setIsLoading(true);
+
+    const category = categoryId ? `&category=${categoryId}` : '';
+    const sortBy = sort.property.replace('-', '');
+    const order = sort.property.includes('-') ? 'desc' : 'ask';
+    const search = searchValue ? `&search=${searchValue}` : '';
+
     (async () => {
-      const { data } = await axios(
-        `https://6315a6a55b85ba9b11e3fc35.mockapi.io/items?${search}&page=${currentPage}&limit=4${category}&sortBy=${sortBy}&order=${order}`
-      );
-      setCountOfItems(data.count);
-      setItems(data.items);
-      setIsLoading(false);
+      try {
+        const { data } = await axios(
+          `https://6315a6a55b85ba9b11e3fc35.mockapi.io/items?${search}&page=${currentPage}&limit=4${category}&sortBy=${sortBy}&order=${order}`
+        );
+        setCountOfItems(data.count);
+        setItems(data.items);
+      } catch (error) {
+        alert('Ошибка при получении пицц');
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
     })();
   };
 
