@@ -5,11 +5,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 
-import Sort from '../component/Sort';
-import Categories from '../component/Categories';
-import PizzaBlock from '../component/PizzaBlock';
-import Skeleton from '../component/PizzaBlock/Skeleton';
-import Pagination from '../component/Pagination';
+import Sort from '../components/Sort';
+import Categories from '../components/Categories';
+import PizzaBlock from '../components/PizzaBlock';
+import Skeleton from '../components/PizzaBlock/Skeleton';
+import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
 import { setFilters } from '../redux/slices/filterSlice';
 import { useRef } from 'react';
@@ -62,7 +62,6 @@ function Home() {
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.slice(1));
-      console.log(params);
 
       dispatch(
         setFilters({
@@ -78,7 +77,6 @@ function Home() {
     if (!isSearch.current) {
       fetchPizzas();
     }
-    console.log(sort);
     isSearch.current = false;
   }, [categoryId, sort, searchValue, currentPage]);
 
