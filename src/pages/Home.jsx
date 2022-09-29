@@ -1,6 +1,6 @@
 import React from 'react';
-import axios from 'axios';
-import { useEffect, useState, useContext } from 'react';
+
+import { useEffect, useState, useContext, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +12,7 @@ import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
 import { setFilters } from '../redux/slices/filterSlice';
-import { useRef } from 'react';
+import { fetchPizzas } from '../redux/slices/pizzaSlice';
 
 function Home() {
   const dispatch = useDispatch();
@@ -21,36 +21,18 @@ function Home() {
   const isMounted = useRef(false);
 
   const { categoryId, sort } = useSelector(state => state.filter);
+  const { items, status } = useSelector(state => state.pizza);
 
   const { searchValue } = useContext(SearchContext);
-  const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
-  const [countOfItems, setCountOfItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const fetchPizzas = () => {
-    setIsLoading(true);
-
+  const getPizzas = async () => {
     const category = categoryId ? `&category=${categoryId}` : '';
     const sortBy = sort.property.replace('-', '');
     const order = sort.property.includes('-') ? 'desc' : 'ask';
     const search = searchValue ? `&search=${searchValue}` : '';
-
-    (async () => {
-      try {
-        const { data } = await axios(
-          `https://6315a6a55b85ba9b11e3fc35.mockapi.io/items?${search}&page=${currentPage}&limit=4${category}&sortBy=${sortBy}&order=${order}`
-        );
-        setCountOfItems(data.count);
-        setItems(data.items);
-      } catch (error) {
-        alert('Ошибка при получении пицц');
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
-    })();
+    dispatch(fetchPizzas({ category, sortBy, order, search, currentPage }));
   };
 
   // Если изменили параметры и был первый рендер
@@ -82,15 +64,13 @@ function Home() {
   // Если был первый рендер, то запрашиваем пиццы
   useEffect(() => {
     if (!isSearch.current) {
-      fetchPizzas();
+      getPizzas();
     }
     isSearch.current = false;
   }, [categoryId, sort, searchValue, currentPage]);
 
   const skeletons = new Array(10).fill('').map((item, index) => <Skeleton key={index} />);
-  const pizzas = items
-    // .filter(pizza => pizza.title.toLowerCase().includes(searchValue.toLowerCase()))
-    .map(pizza => <PizzaBlock key={pizza.id} {...pizza} />);
+  const pizzas = items.map(pizza => <PizzaBlock key={pizza.id} {...pizza} />);
   return (
     <>
       <div className="container">
@@ -99,8 +79,18 @@ function Home() {
           <Sort />
         </div>
         <h2 className="content__title">Все пиццы</h2>
-        <div className="content__items">{isLoading ? skeletons : pizzas}</div>
-        <Pagination countOfItems={countOfItems} setCurrentPage={number => setCurrentPage(number)} />
+        {status === 'error' ? (
+          <div className="content__error-info">
+            <span>&#128542;</span>
+            <h1>Произошла ошибка</h1>
+            <p>К сожалению, не удалось получить пиццы. Попробуйте повторить попытку позже</p>
+          </div>
+        ) : (
+          <>
+            <div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
+            <Pagination setCurrentPage={number => setCurrentPage(number)} />
+          </>
+        )}
       </div>
     </>
   );
