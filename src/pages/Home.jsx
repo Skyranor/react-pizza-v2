@@ -10,8 +10,8 @@ import Categories from '../components/Categories';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
-import { setFilters } from '../redux/slices/filterSlice';
-import { fetchPizzas } from '../redux/slices/pizzaSlice';
+import { selectFilter, setFilters } from '../redux/slices/filterSlice';
+import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
 
 function Home() {
   const dispatch = useDispatch();
@@ -19,8 +19,8 @@ function Home() {
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  const { categoryId, sort, searchValue } = useSelector(state => state.filter);
-  const { items, status } = useSelector(state => state.pizza);
+  const { categoryId, sort, searchValue } = useSelector(selectFilter);
+  const { items, status } = useSelector(selectPizzaData);
 
   const [currentPage, setCurrentPage] = useState(1);
 
