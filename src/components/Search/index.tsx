@@ -4,26 +4,26 @@ import debounce from 'lodash.debounce';
 import { useDispatch } from 'react-redux';
 import { setSearchValue } from '../../redux/slices/filterSlice';
 
-function Search() {
+const Search: React.FC = () => {
   const dispatch = useDispatch();
   const [value, setValue] = useState('');
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const updateSearchValue = useCallback(
-    debounce(str => {
+    debounce((str: string) => {
       dispatch(setSearchValue(str));
-    }, 150),
+    }, 250),
     []
   );
 
-  const onChangeInput = event => {
+  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
     updateSearchValue(event.target.value);
   };
   const clearInput = () => {
     dispatch(setSearchValue(''));
     setValue('');
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
   return (
@@ -80,8 +80,16 @@ function Search() {
           <title />
           <desc />
           <defs />
-          <g fill="none" fillRule="evenodd" id="Page-1" stroke="none" strokeWidth="1">
-            <g fill="#000000" id="Core" transform="translate(-341.000000, -89.000000)">
+          <g
+            fill="none"
+            fillRule="evenodd"
+            id="Page-1"
+            stroke="none"
+            strokeWidth="1">
+            <g
+              fill="#000000"
+              id="Core"
+              transform="translate(-341.000000, -89.000000)">
               <g id="close" transform="translate(341.000000, 89.000000)">
                 <path
                   d="M14,1.4 L12.6,0 L7,5.6 L1.4,0 L0,1.4 L5.6,7 L0,12.6 L1.4,14 L7,8.4 L12.6,14 L14,12.6 L8.4,7 L14,1.4 Z"
@@ -94,6 +102,6 @@ function Search() {
       )}
     </div>
   );
-}
+};
 
 export default Search;

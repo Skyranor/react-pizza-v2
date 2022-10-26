@@ -1,7 +1,6 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
 
 const FullPizza: React.FC = () => {
   const [pizza, setPizza] = useState<{
@@ -34,7 +33,7 @@ const FullPizza: React.FC = () => {
       <img src={pizza.imageUrl} alt="Пицца" />
       <h2>{pizza.title}</h2>
       <h4>{pizza.price} ₽</h4>
-      <p>{pizza.description || ''}</p>
+      {pizza.description ? <p>{pizza.description}</p> : null}
     </div>
   );
 };

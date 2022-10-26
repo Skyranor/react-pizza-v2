@@ -1,18 +1,20 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectCart } from '.././redux/slices/cartSlice.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectCart } from '../redux/slices/cartSlice';
+import { setSearchValue } from '../redux/slices/filterSlice';
 
 import logo from '../assets/img/pizza-logo.svg';
 import Search from './Search';
 
-function Header() {
+const Header: React.FC = () => {
+  const dispatch = useDispatch();
   const { totalPrice, totalCount } = useSelector(selectCart);
   const { pathname } = useLocation();
   return (
     <div className="header">
       <div className="container">
-        <Link to="/">
+        <Link to="/" onClick={() => dispatch(setSearchValue(''))}>
           <div className="header__logo">
             <img width="38" src={logo} alt="Pizza logo" />
             <div>
@@ -66,6 +68,6 @@ function Header() {
       </div>
     </div>
   );
-}
+};
 
 export default Header;

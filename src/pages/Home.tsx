@@ -1,7 +1,5 @@
-import React from 'react';
-
-import { useEffect, useState, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,24 +10,32 @@ import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
 import { selectFilter, setFilters } from '../redux/slices/filterSlice';
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
+import { useAppDispatch } from '../redux/store';
 
-function Home() {
-  const dispatch = useDispatch();
+const Home: React.FC = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  const { categoryId, sort, searchValue } = useSelector(selectFilter);
+  const { categoryId, currentPage, sort, searchValue } = useSelector(selectFilter);
   const { items, status } = useSelector(selectPizzaData);
-
-  const [currentPage, setCurrentPage] = useState(1);
 
   const getPizzas = async () => {
     const category = categoryId ? `&category=${categoryId}` : '';
     const sortBy = sort.property.replace('-', '');
     const order = sort.property.includes('-') ? 'desc' : 'ask';
-    const search = searchValue ? `&search=${searchValue}` : '';
-    dispatch(fetchPizzas({ category, sortBy, order, search, currentPage }));
+    const search = searchValue ? `&title=${searchValue}` : '';
+
+    dispatch(
+      fetchPizzas({
+        category,
+        sortBy,
+        order,
+        search,
+        currentPage
+      })
+    );
   };
 
   // Если изменили параметры и был первый рендер
@@ -66,15 +72,18 @@ function Home() {
     isSearch.current = false;
   }, [categoryId, sort, searchValue, currentPage]);
 
-  const skeletons = new Array(10).fill('').map((item, index) => <Skeleton key={index} />);
-  const pizzas = items.map(pizza => <PizzaBlock key={pizza.id} {...pizza} />);
+  const skeletons = new Array(4).fill('').map((item, index) => <Skeleton key={index} />);
+  const pizzas = items.map((pizza: any) => <PizzaBlock key={pizza.id} {...pizza} />);
   return (
     <>
       <div className="container">
-        <div className="content__top">
-          <Categories categoryId={categoryId} />
-          <Sort />
-        </div>
+        {searchValue ? null : (
+          <div className="content__top">
+            <Categories categoryId={categoryId} />
+            <Sort sort={sort} />
+          </div>
+        )}
+
         <h2 className="content__title">Все пиццы</h2>
         {status === 'error' ? (
           <div className="content__error-info">
@@ -85,12 +94,12 @@ function Home() {
         ) : (
           <>
             <div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
-            <Pagination setCurrentPage={number => setCurrentPage(number)} />
+            {items.length ? <Pagination /> : null}
           </>
         )}
       </div>
     </>
   );
-}
+};
 
 export default Home;

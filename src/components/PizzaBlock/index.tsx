@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, selectCartItemById } from '../../redux/slices/cartSlice';
+import { addItem, CartItem, selectCartItemById } from '../../redux/slices/cartSlice';
 import { Link } from 'react-router-dom';
 
 const dough = ['Тонкое', 'Традиционное'];
-function PizzaBlock({ title, imageUrl, price, sizes, types, id }) {
+
+type PizzaBlockProps = {
+  title: string;
+  imageUrl: string;
+  price: number;
+  sizes: number[];
+  types: number[];
+  id: string;
+};
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ({ title, imageUrl, price, sizes, types, id }) => {
   const dispatch = useDispatch();
   const cartItem = useSelector(selectCartItemById(id));
   const [sizeIndex, setSizeIndex] = useState(0);
@@ -13,13 +23,14 @@ function PizzaBlock({ title, imageUrl, price, sizes, types, id }) {
   const addedCount = cartItem ? cartItem.count : null;
 
   const onClickAdd = () => {
-    const item = {
+    const item: CartItem = {
       title,
       imageUrl,
       price,
       size: sizes[sizeIndex],
       dough: dough[doughIndex],
-      id
+      id,
+      count: 0
     };
     dispatch(addItem(item));
   };
@@ -31,7 +42,7 @@ function PizzaBlock({ title, imageUrl, price, sizes, types, id }) {
       </Link>
       <div className="pizza-block__selector">
         <ul>
-          {types.map(typeId => (
+          {types.map((typeId) => (
             <li
               key={typeId}
               onClick={() => setDoughIndex(typeId)}
@@ -71,6 +82,6 @@ function PizzaBlock({ title, imageUrl, price, sizes, types, id }) {
       </div>
     </div>
   );
-}
+};
 
 export default PizzaBlock;
