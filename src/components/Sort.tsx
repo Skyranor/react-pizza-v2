@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setSort, SortType } from '../redux/slices/filterSlice';
 import useWhyDidYouUpdate from 'ahooks/lib/useWhyDidYouUpdate';
+import { SortType } from '../redux/slices/filter/types';
+import { setSort } from '../redux/slices/filter/slice';
 
 // type SortType = {
 //   name: string;
@@ -22,7 +23,6 @@ type SortProps = {
 };
 
 const Sort: React.FC<SortProps> = React.memo(({ sort }) => {
-  useWhyDidYouUpdate('SortProps', { sort });
   const dispatch = useDispatch();
   const sortRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);

@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
-import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice';
 import React from 'react';
+import { setCategoryId, setCurrentPage } from '../redux/slices/filter/slice';
 
 type CategoriesProps = {
   categoryId: number;

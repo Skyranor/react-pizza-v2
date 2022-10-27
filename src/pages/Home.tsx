@@ -8,9 +8,13 @@ import Categories from '../components/Categories';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
-import { selectFilter, setFilters } from '../redux/slices/filterSlice';
-import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
 import { useAppDispatch } from '../redux/store';
+import { selectPizzaData } from '../redux/slices/pizza/selectors';
+import { fetchPizzas } from '../redux/slices/pizza/asyncActions';
+import { selectFilter } from '../redux/slices/filter/selectors';
+import { setFilters } from '../redux/slices/filter/slice';
+import { Pizza } from '../redux/slices/pizza/types';
+import { FilterType } from '../redux/slices/filter/types';
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -57,7 +61,7 @@ const Home: React.FC = () => {
 
       dispatch(
         setFilters({
-          ...params
+          ...(params as FilterType)
         })
       );
       isSearch.current = true;
@@ -73,7 +77,7 @@ const Home: React.FC = () => {
   }, [categoryId, sort, searchValue, currentPage]);
 
   const skeletons = new Array(4).fill('').map((item, index) => <Skeleton key={index} />);
-  const pizzas = items.map((pizza: any) => <PizzaBlock key={pizza.id} {...pizza} />);
+  const pizzas = items.map((pizza: Pizza) => <PizzaBlock key={pizza.id} {...pizza} />);
   return (
     <>
       <div className="container">
