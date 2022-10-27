@@ -27,7 +27,6 @@ const filterSlice = createSlice({
     },
     setFilters(state, action: PayloadAction<FilterType>) {
       if (Object.keys(action.payload).length) {
-        console.log(action.payload);
         state.categoryId = Number(action.payload.categoryId);
         state.sort = action.payload.sort;
       } else {

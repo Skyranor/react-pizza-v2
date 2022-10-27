@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -8,9 +8,18 @@ import { selectCart } from '../redux/slices/cart/selectors';
 import { setSearchValue } from '../redux/slices/filter/slice';
 
 const Header: React.FC = () => {
+  const isMounted = useRef(false);
   const dispatch = useDispatch();
-  const { totalPrice, totalCount } = useSelector(selectCart);
+  const { totalPrice, totalCount, items } = useSelector(selectCart);
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (isMounted.current) {
+      const json = JSON.stringify(items);
+      localStorage.setItem('cart', json);
+    }
+    isMounted.current = true;
+  }, [items]);
 
   return (
     <div className="header">
