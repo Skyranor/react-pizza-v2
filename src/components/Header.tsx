@@ -1,13 +1,19 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import logo from '../assets/img/pizza-logo.svg';
 import Search from './Search';
 import { selectCart } from '../redux/slices/cart/selectors';
-import { setSearchValue } from '../redux/slices/filter/slice';
+import {
+  setSearchValue,
+  setCategoryId,
+  setCurrentPage,
+  setSort
+} from '../redux/slices/filter/slice';
 
 const Header: React.FC = () => {
+  const [value, setValue] = useState('');
   const isMounted = useRef(false);
   const dispatch = useDispatch();
   const { totalPrice, totalCount, items } = useSelector(selectCart);
@@ -21,10 +27,18 @@ const Header: React.FC = () => {
     isMounted.current = true;
   }, [items]);
 
+  const onClickLogo = () => {
+    dispatch(setSearchValue(''));
+    dispatch(setCategoryId(0));
+    dispatch(setCurrentPage(1));
+    dispatch(setSort({ name: 'популярности(DESK)', property: 'rating' }));
+    setValue('');
+  };
+
   return (
     <div className="header">
       <div className="container">
-        <Link to="/" onClick={() => dispatch(setSearchValue(''))}>
+        <Link to="/" onClick={onClickLogo}>
           <div className="header__logo">
             <img width="38" src={logo} alt="Pizza logo" />
             <div>
@@ -33,7 +47,7 @@ const Header: React.FC = () => {
             </div>
           </div>
         </Link>
-        {pathname === '/' ? <Search /> : null}
+        {pathname === '/' ? <Search value={value} setValue={setValue} /> : null}
         {pathname !== '/cart' ? (
           <Link to="/cart" className="button button--cart">
             <span>{totalPrice} ₽</span>
