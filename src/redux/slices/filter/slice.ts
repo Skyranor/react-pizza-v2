@@ -19,6 +19,7 @@ const filterSlice = createSlice({
       state.currentPage = action.payload;
     },
     setSearchValue(state, action: PayloadAction<string>) {
+      state.currentPage = 1;
       state.searchValue = action.payload;
     },
 
