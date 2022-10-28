@@ -6,7 +6,7 @@ import { setCurrentPage } from '../../redux/slices/filter/slice';
 import { selectPizzaData } from '../../redux/slices/pizza/selectors';
 import styles from './Pagination.module.scss';
 
-const Pagination: React.FC = () => {
+export const Pagination: React.FC = () => {
   const { countOfItems } = useSelector(selectPizzaData);
   const { currentPage } = useSelector(selectFilter);
   const dispatch = useDispatch();
@@ -23,5 +23,3 @@ const Pagination: React.FC = () => {
     />
   );
 };
-
-export default Pagination;

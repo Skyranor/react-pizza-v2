@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Search } from './index';
 import logo from '../assets/img/pizza-logo.svg';
-import Search from './Search';
 import { selectCart } from '../redux/slices/cart/selectors';
 import {
   setSearchValue,
@@ -12,7 +12,7 @@ import {
   setSort
 } from '../redux/slices/filter/slice';
 
-const Header: React.FC = () => {
+export const Header: React.FC = () => {
   const [value, setValue] = useState('');
   const isMounted = useRef(false);
   const dispatch = useDispatch();
@@ -93,5 +93,3 @@ const Header: React.FC = () => {
     </div>
   );
 };
-
-export default Header;

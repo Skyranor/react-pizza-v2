@@ -3,11 +3,7 @@ import { useSelector } from 'react-redux';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 
-import Sort from '../components/Sort';
-import Categories from '../components/Categories';
-import PizzaBlock from '../components/PizzaBlock';
-import Skeleton from '../components/PizzaBlock/Skeleton';
-import Pagination from '../components/Pagination';
+import { Categories, Pagination, PizzaBlock, Skeleton, Sort } from '../components';
 import { useAppDispatch } from '../redux/store';
 import { selectPizzaData } from '../redux/slices/pizza/selectors';
 import { fetchPizzas } from '../redux/slices/pizza/asyncActions';

@@ -8,7 +8,7 @@ type CategoriesProps = {
 
 const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
-const Categories: React.FC<CategoriesProps> = React.memo(({ categoryId }) => {
+export const Categories: React.FC<CategoriesProps> = React.memo(({ categoryId }) => {
   const dispatch = useDispatch();
 
   const onClickCategory = (category: number) => {
@@ -29,5 +29,3 @@ const Categories: React.FC<CategoriesProps> = React.memo(({ categoryId }) => {
     </ul>
   );
 });
-
-export default Categories;

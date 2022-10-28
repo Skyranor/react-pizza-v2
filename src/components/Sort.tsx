@@ -1,13 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import useWhyDidYouUpdate from 'ahooks/lib/useWhyDidYouUpdate';
 import { SortType } from '../redux/slices/filter/types';
 import { setSort } from '../redux/slices/filter/slice';
-
-// type SortType = {
-//   name: string;
-//   property: string;
-// };
 
 export const sortList: SortType[] = [
   { name: 'популярности(DESK)', property: '-rating' },
@@ -22,7 +16,7 @@ type SortProps = {
   sort: SortType;
 };
 
-const Sort: React.FC<SortProps> = React.memo(({ sort }) => {
+export const Sort: React.FC<SortProps> = React.memo(({ sort }) => {
   const dispatch = useDispatch();
   const sortRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
@@ -75,5 +69,3 @@ const Sort: React.FC<SortProps> = React.memo(({ sort }) => {
     </div>
   );
 });
-
-export default Sort;

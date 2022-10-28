@@ -1,6 +1,6 @@
 import styles from './NotFoundBlock.module.scss';
 
-const NotFoundBlock: React.FC = () => {
+export const NotFoundBlock: React.FC = () => {
   return (
     <div className={styles.container}>
       <span>&#128542;</span>
@@ -11,5 +11,3 @@ const NotFoundBlock: React.FC = () => {
     </div>
   );
 };
-
-export default NotFoundBlock;

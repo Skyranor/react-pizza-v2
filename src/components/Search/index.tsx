@@ -9,7 +9,7 @@ type SearchProps = {
   setValue: (value: string) => void;
 };
 
-const Search: React.FC<SearchProps> = ({ value, setValue }) => {
+export const Search: React.FC<SearchProps> = ({ value, setValue }) => {
   const dispatch = useDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -99,5 +99,3 @@ const Search: React.FC<SearchProps> = ({ value, setValue }) => {
     </div>
   );
 };
-
-export default Search;
