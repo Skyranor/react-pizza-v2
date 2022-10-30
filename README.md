@@ -1,4 +1,4 @@
-# 🍕 React Pizza v2 (REMASTERED) 🍕
+# 🍕 React Pizza 🍕
 
 ## 🔥 Тут я научился:
 
