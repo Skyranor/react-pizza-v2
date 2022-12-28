@@ -1,0 +1,102 @@
+@import '../../scss/variables';
+@import '../../scss/libs/normalize';
+
+.cartItem {
+	display: grid;
+	grid-template-columns: 1fr minmax(250px, 1fr);
+	align-items: center;
+	margin-bottom: 30px;
+	column-gap: 30px;
+
+	@media screen and (max-width: 649px) {
+		grid-template-columns: 1fr;
+		gap: 5px;
+		padding: 15px;
+		margin-bottom: 25px;
+	}
+
+	&Inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	&Count {
+		display: flex;
+		align-items: center;
+		b {
+			font-size: 22px;
+			padding: 5px;
+		}
+
+		&Minus {
+			svg {
+				path:first-of-type {
+					display: none;
+				}
+			}
+
+			&:disabled {
+				border-color: #dddddd;
+
+				&:active {
+					transform: none;
+				}
+
+				svg path {
+					fill: #dddddd;
+				}
+
+				&:hover {
+					background-color: transparent;
+
+					svg path {
+						fill: #dddddd;
+					}
+				}
+			}
+		}
+	}
+	&Price {
+		b {
+			font-weight: bold;
+			font-size: 22px;
+			letter-spacing: 0.01em;
+		}
+	}
+
+	&Remove {
+		button {
+			border-color: darken($color: $gray-line, $amount: 10);
+			svg {
+				width: 11.5px;
+				height: 11.5px;
+				position: relative;
+			}
+			&:hover,
+			&:active {
+				border-color: darken($color: $gray-line, $amount: 80);
+				background-color: darken($color: $gray-line, $amount: 80);
+			}
+		}
+
+		svg {
+			transform: rotate(45deg);
+
+			path {
+				fill: darken($color: $gray-line, $amount: 15) !important;
+			}
+		}
+	}
+}
+
+.pizza {
+	display: flex;
+	gap: 15px;
+	align-items: center;
+
+	img {
+		max-width: 80px;
+		height: auto;
+	}
+}

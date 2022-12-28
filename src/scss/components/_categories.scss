@@ -1,37 +1,38 @@
 @import '../variables';
 
 .categories {
-  max-width: 900px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
 
-  @media screen and (max-width: 530px) {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    align-self: center;
-  }
+	@media screen and (max-width: 580px) {
+		justify-content: space-between;
+	}
 
-  li {
-    background-color: #f9f9f9;
-    padding: 13px 30px;
-    border-radius: 30px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.1s ease-in-out;
-    @include noselect();
+	li {
+		@media screen and (max-width: 580px) {
+			flex: 1;
+		}
+		text-align: center;
+		background-color: #f9f9f9;
+		padding: 13px 30px;
+		border-radius: 30px;
+		font-weight: bold;
+		cursor: pointer;
+		transition: background-color 0.1s ease-in-out;
+		@include noselect();
 
-    &:hover {
-      background-color: darken(#f9f9f9, 2%);
-    }
+		&:hover {
+			background-color: darken(#f9f9f9, 2%);
+		}
 
-    &:active {
-      background-color: darken(#f9f9f9, 5%);
-    }
+		&:active {
+			background-color: darken(#f9f9f9, 5%);
+		}
 
-    &.active {
-      background-color: #282828;
-      color: #fff;
-    }
-  }
+		&.active {
+			background-color: #282828;
+			color: #fff;
+		}
+	}
 }

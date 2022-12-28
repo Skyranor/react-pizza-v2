@@ -1,61 +1,72 @@
 @import '../variables';
 
 .sort {
-  position: relative;
-  z-index: 100;
+	position: relative;
+	z-index: 100;
+	align-self: start;
 
-  @media screen and (max-width: 1340px) {
-    align-self: baseline;
-  }
+	@media screen and (max-width: 720px) {
+		justify-self: end;
+		padding-top: 25px;
+	}
 
-  &__label {
-    display: flex;
-    gap: 8px;
+	@media screen and (max-width: 500px) {
+		justify-self: start;
+		padding-top: 25px;
+	}
 
-    @media screen and (max-width: 860px) {
-      padding-top: 25px;
-    }
+	&__label {
+		display: flex;
+		gap: 8px;
 
-    b {
-      color: #2c2c2c;
-    }
+		@media screen and (max-width: 860px) {
+			flex-direction: column;
+		}
 
-    span {
-      color: $orange;
-      border-bottom: 1px dashed $orange;
-      font-weight: 400;
-      cursor: pointer;
-      margin-right: 8px;
-    }
-  }
+		@media screen and (max-width: 860px) {
+			flex-direction: row;
+		}
 
-  &__popup {
-    position: absolute;
-    left: 110px;
-    margin-top: 15px;
-    background: #ffffff;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.09);
-    border-radius: 10px;
-    overflow: hidden;
-    padding: 10px 0;
-    width: 200px;
+		b {
+			color: #2c2c2c;
+		}
 
-    ul {
-      overflow: hidden;
-      li {
-        padding: 12px 20px;
-        cursor: pointer;
+		span {
+			color: $orange;
+			border-bottom: 1px dashed $orange;
+			font-weight: 400;
+			cursor: pointer;
+			margin-right: 8px;
+		}
+	}
 
-        &.active,
-        &:hover {
-          background: rgba(254, 95, 30, 0.05);
-        }
+	&__popup {
+		position: absolute;
+		right: 0;
+		margin-top: 15px;
+		background: #ffffff;
+		box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.09);
+		border-radius: 10px;
+		overflow: hidden;
+		padding: 10px 0;
+		width: 200px;
 
-        &.active {
-          font-weight: bold;
-          color: $orange;
-        }
-      }
-    }
-  }
+		ul {
+			overflow: hidden;
+			li {
+				padding: 12px 20px;
+				cursor: pointer;
+
+				&.active,
+				&:hover {
+					background: rgba(254, 95, 30, 0.05);
+				}
+
+				&.active {
+					font-weight: bold;
+					color: $orange;
+				}
+			}
+		}
+	}
 }
